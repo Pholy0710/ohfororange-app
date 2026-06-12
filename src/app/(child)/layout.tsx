@@ -3,9 +3,9 @@ import { TopBar } from "@/components/layout/TopBar";
 
 export default function ChildLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen playful-bg">
+    <div className="min-h-screen storybook-bg">
       <TopBar />
-      <main className="pb-24 pt-2">{children}</main>
+      <main className="pb-28 pt-2">{children}</main>
       <ChildNav />
     </div>
   );

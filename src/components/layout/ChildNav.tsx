@@ -23,16 +23,17 @@ export function ChildNav() {
       {/* Rainbow top border */}
       <div
         className="h-[3px]"
-        style={{ background: "linear-gradient(90deg, #FF6B2B, #FF4B8B, #8B5CF6, #0EA5E9, #10B981, #F59E0B, #FF6B2B)" }}
+        style={{
+          background:
+            "linear-gradient(90deg, #7C8CFF, #B68DFF, #FF9ECF, #FFB84D, #6DDC91, #BFE7FF, #7C8CFF)",
+        }}
       />
 
-      <div
-        className="bg-white"
-        style={{ boxShadow: "0 -4px 24px rgba(255, 107, 43, 0.13)" }}
-      >
+      <div className="bg-white" style={{ boxShadow: "0 -4px 24px rgba(124, 140, 255, 0.13)" }}>
         <div className="flex items-stretch overflow-x-auto" style={{ scrollbarWidth: "none" }}>
           {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const isActive =
+              pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <Link
                 key={item.href}
@@ -43,14 +44,14 @@ export function ChildNav() {
                   <motion.div
                     layoutId="nav-active"
                     className="absolute inset-0"
-                    style={{ background: "linear-gradient(to bottom, #FFF0E8, #FFE8D8)" }}
+                    style={{ background: "linear-gradient(to bottom, #EEF0FF, #E8EDFF)" }}
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
                 {isActive && (
                   <div
                     className="absolute top-0 left-2 right-2 h-[3px] rounded-b-full"
-                    style={{ background: "linear-gradient(90deg, #FF6B2B, #FF4B8B)" }}
+                    style={{ background: "linear-gradient(90deg, #7C8CFF, #B68DFF)" }}
                   />
                 )}
                 <motion.span
@@ -61,9 +62,8 @@ export function ChildNav() {
                   {item.emoji}
                 </motion.span>
                 <span
-                  className={`relative text-[9px] font-black mt-0.5 ${
-                    isActive ? "text-[#FF6B2B]" : "text-gray-400"
-                  }`}
+                  className="relative text-[9px] font-black mt-0.5"
+                  style={{ color: isActive ? "#7C8CFF" : "#9CA3AF" }}
                 >
                   {item.label}
                 </span>

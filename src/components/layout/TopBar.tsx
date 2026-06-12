@@ -16,15 +16,15 @@ export function TopBar({ title, backHref, showStars = true, stars = 0, rightElem
   return (
     <header
       className="sticky top-0 z-40 shadow-xl"
-      style={{ background: "linear-gradient(135deg, #FF6B2B 0%, #FF4B8B 100%)" }}
+      style={{ background: "linear-gradient(135deg, #7C8CFF 0%, #B68DFF 100%)" }}
     >
-      {/* Shine overlay */}
+      {/* Shine */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.2), transparent)" }}
       />
 
-      <div className="relative flex items-center justify-between px-4 py-2 max-w-4xl mx-auto">
+      <div className="relative flex items-center justify-between px-4 py-2.5 max-w-4xl mx-auto">
         {/* Left */}
         <div className="flex items-center gap-3">
           {backHref ? (
@@ -36,7 +36,7 @@ export function TopBar({ title, backHref, showStars = true, stars = 0, rightElem
               ←
             </Link>
           ) : (
-            <Link href="/home" className="flex items-center gap-2">
+            <Link href="/home" className="flex items-center gap-2.5">
               <motion.div
                 className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white/60 shadow-lg flex-shrink-0"
                 animate={{ rotate: [-3, 3, -3] }}
@@ -50,13 +50,21 @@ export function TopBar({ title, backHref, showStars = true, stars = 0, rightElem
                   sizes="44px"
                 />
               </motion.div>
-              <span className="display-font text-white text-xl hidden sm:block drop-shadow-sm tracking-wide">
+              <span
+                className="text-white text-xl hidden sm:block drop-shadow-sm tracking-wide"
+                style={{ fontFamily: "Fredoka, cursive", fontWeight: 600 }}
+              >
                 OhforOrange
               </span>
             </Link>
           )}
           {title && (
-            <h1 className="text-xl font-black text-white drop-shadow-sm">{title}</h1>
+            <h1
+              className="text-xl text-white drop-shadow-sm"
+              style={{ fontFamily: "Fredoka, cursive", fontWeight: 600 }}
+            >
+              {title}
+            </h1>
           )}
         </div>
 

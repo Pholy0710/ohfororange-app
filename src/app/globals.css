@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fredoka+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Nunito:wght@400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,9 +12,9 @@
     --card-foreground: 20 14% 20%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14% 20%;
-    --primary: 22 100% 58%;
+    --primary: 231 100% 74%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 100% 88%;
+    --secondary: 38 100% 65%;
     --secondary-foreground: 20 14% 20%;
     --muted: 30 40% 95%;
     --muted-foreground: 20 10% 50%;
@@ -22,9 +22,9 @@
     --accent-foreground: 20 14% 20%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 30% 88%;
-    --input: 30 30% 88%;
-    --ring: 22 100% 58%;
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 231 100% 74%;
     --radius: 1rem;
   }
 }
@@ -38,193 +38,269 @@
   body {
     @apply text-foreground;
     font-family: "Nunito", system-ui, sans-serif;
-    background-color: #FFF5EE;
+    background: linear-gradient(180deg, #FFF8EC 0%, #F5F7FF 50%, #EAF7FF 100%);
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Nunito", system-ui, sans-serif;
-    font-weight: 800;
+    font-family: "Fredoka", "Nunito", system-ui, sans-serif;
+    font-weight: 600;
   }
 }
 
 @layer components {
 
-  /* ─── NEW UTILITIES ─── */
+  /* ─── FONTS ─── */
 
   .display-font {
-    font-family: "Fredoka One", cursive;
-    font-weight: 400;
-    letter-spacing: 0.5px;
+    font-family: "Fredoka", cursive;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .display-font-bold {
+    font-family: "Fredoka", cursive;
+    font-weight: 700;
+  }
+
+  /* ─── BACKGROUNDS ─── */
+
+  .storybook-bg {
+    background: linear-gradient(180deg, #FFF8EC 0%, #F5F7FF 50%, #EAF7FF 100%);
+    min-height: 100vh;
   }
 
   .playful-bg {
-    background-color: #FFF5EE;
-    background-image: radial-gradient(circle, #FFDBC8 1.5px, transparent 1.5px);
-    background-size: 28px 28px;
+    background: linear-gradient(180deg, #FFF8EC 0%, #F5F7FF 50%, #EAF7FF 100%);
   }
 
+  /* ─── GRADIENT TEXT ─── */
+
   .gradient-text {
+    background: linear-gradient(135deg, #7C8CFF 0%, #B68DFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-warm {
     background: linear-gradient(135deg, #FF6B2B 0%, #FF4B8B 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  /* ─── SHINE OVERLAY ─── */
+
   .shine-top {
-    @apply absolute top-0 left-0 right-0 rounded-t-[inherit] pointer-events-none;
+    @apply absolute top-0 left-0 right-0 pointer-events-none;
     height: 45%;
     background: linear-gradient(to bottom, rgba(255,255,255,0.22), transparent);
+    border-radius: inherit;
+  }
+
+  /* ─── ADVENTURE CARD (base for all dashboard sections) ─── */
+
+  .adventure-card {
+    @apply bg-white rounded-[32px] p-6 transition-all duration-300;
+    box-shadow: 0 4px 24px rgba(124, 140, 255, 0.12);
+  }
+
+  .adventure-card:hover {
+    box-shadow: 0 8px 40px rgba(124, 140, 255, 0.2);
+  }
+
+  /* ─── ACHIEVEMENT CARD ─── */
+
+  .achievement-card {
+    @apply bg-white rounded-[30px] p-5 transition-all duration-300 hover:-translate-y-2 cursor-pointer;
+    box-shadow: 0 4px 20px rgba(124, 140, 255, 0.12);
+  }
+
+  .achievement-card:hover {
+    box-shadow: 0 12px 40px rgba(124, 140, 255, 0.22);
   }
 
   /* ─── BUTTONS ─── */
 
   .btn-primary {
-    @apply text-white font-bold py-3 px-6 rounded-2xl
+    @apply text-white font-bold py-3 px-6 rounded-full
            shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105
            active:scale-95 cursor-pointer select-none;
-    background: linear-gradient(135deg, #FF6B2B, #FF4B8B);
+    background: linear-gradient(135deg, #7C8CFF, #B68DFF);
   }
 
   .btn-secondary {
-    @apply bg-white text-[#FF6B2B] font-bold py-3 px-6 rounded-2xl border-2 border-[#FF6B2B]
-           hover:bg-[#FFF3EE] transition-all duration-200 hover:scale-105 active:scale-95
+    @apply bg-white font-bold py-3 px-6 rounded-full border-2 border-[#7C8CFF]
+           hover:bg-blue-50 transition-all duration-200 hover:scale-105 active:scale-95
            cursor-pointer select-none;
+    color: #7C8CFF;
   }
 
-  /* ─── CARDS ─── */
+  /* ─── TASK ITEM ─── */
 
-  .card-orange {
-    @apply bg-white rounded-3xl border border-orange-100 p-6
-           hover:scale-[1.02] transition-all duration-200;
-    box-shadow: 0 4px 20px rgba(255, 107, 43, 0.12);
+  .task-item {
+    @apply flex items-center gap-3 rounded-2xl p-4 mb-3 cursor-pointer
+           transition-all duration-200 hover:scale-[1.02];
+    background: #F0F4FF;
   }
 
-  .card-gradient {
-    @apply bg-gradient-to-br from-[#FFF8F4] to-[#FFEEDD] rounded-3xl
-           border border-orange-100 p-6;
-    box-shadow: 0 4px 20px rgba(255, 107, 43, 0.12);
-  }
-
-  /* ─── TYPOGRAPHY ─── */
-
-  .letter-display {
-    @apply text-[120px] font-black text-[#FF6B2B] leading-none select-none;
-    font-family: "Fredoka One", "Nunito", cursive;
-    text-shadow: 4px 4px 0px rgba(255, 107, 43, 0.2);
-  }
-
-  .section-title {
-    @apply text-3xl font-black text-[#FF6B2B] mb-2;
-  }
-
-  /* ─── NAV ─── */
-
-  .nav-card {
-    @apply flex flex-col items-center justify-center gap-3 p-6 rounded-3xl
-           bg-white hover:scale-105 transition-all duration-200 cursor-pointer select-none
-           border-2 border-transparent hover:border-[#FF6B2B]/20;
-    box-shadow: 0 4px 20px rgba(255, 107, 43, 0.12);
-  }
-
-  /* ─── PROGRESS ─── */
+  /* ─── NAV / PROGRESS ─── */
 
   .progress-bar {
-    @apply h-4 rounded-full bg-orange-100 overflow-hidden;
+    @apply h-4 rounded-full overflow-hidden;
+    background: #E8EDFF;
   }
 
   .progress-fill {
-    @apply h-full rounded-full transition-all duration-500 ease-out;
-    background: linear-gradient(90deg, #FF6B2B, #FFD93D);
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+    background: linear-gradient(90deg, #6DDC91, #7C8CFF);
+  }
+
+  /* ─── LETTER DISPLAY ─── */
+
+  .letter-display {
+    font-family: "Fredoka", cursive;
+    font-weight: 700;
+    @apply text-[120px] leading-none select-none;
+    color: #7C8CFF;
+    text-shadow: 4px 4px 0px rgba(124, 140, 255, 0.2);
+  }
+
+  .section-title {
+    @apply text-3xl font-black mb-2;
+    font-family: "Fredoka", cursive;
+    color: #7C8CFF;
   }
 
   /* ─── MISC ─── */
 
-  .sticker {
-    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
-  }
-
-  .star-badge {
-    @apply inline-flex items-center justify-center w-10 h-10 rounded-full
-           text-white font-black text-lg;
-    background: linear-gradient(135deg, #FFD93D, #FF6B2B);
-    box-shadow: 0 0 20px rgba(255, 107, 43, 0.4);
+  .word-card {
+    @apply bg-white rounded-2xl border border-blue-100
+           p-4 text-center hover:scale-105 transition-all duration-200 cursor-pointer;
+    box-shadow: 0 2px 12px rgba(124, 140, 255, 0.1);
   }
 
   .game-button {
-    @apply w-full py-4 px-6 rounded-2xl font-bold text-lg text-white
+    @apply w-full py-4 px-6 rounded-full font-bold text-lg text-white
            shadow-lg hover:shadow-xl active:scale-95
            transition-all duration-150 cursor-pointer select-none;
-    background: linear-gradient(135deg, #FF6B2B, #FF4B8B);
+    background: linear-gradient(135deg, #7C8CFF, #B68DFF);
   }
 
   .audio-button {
     @apply flex items-center justify-center w-14 h-14 rounded-full text-white
            hover:scale-110 active:scale-90 transition-all duration-150 cursor-pointer;
-    background: linear-gradient(135deg, #6BC5F8, #6BCFB5);
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #6DDC91, #7C8CFF);
   }
 
-  .word-card {
-    @apply bg-white rounded-2xl border border-orange-100
-           p-4 text-center hover:scale-105 transition-all duration-200 cursor-pointer;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  .nav-card {
+    @apply flex flex-col items-center justify-center gap-3 p-6 rounded-[30px]
+           bg-white hover:scale-105 transition-all duration-200 cursor-pointer select-none;
+    box-shadow: 0 4px 20px rgba(124, 140, 255, 0.12);
   }
 
   .mascot-bubble {
     @apply relative bg-white rounded-2xl p-4
-           border-2 border-orange-200 text-[#FF6B2B] font-bold text-lg;
-    box-shadow: 0 4px 20px rgba(255, 107, 43, 0.12);
-  }
-
-  .worksheet-card {
-    @apply bg-white rounded-2xl border border-orange-100 p-4
-           hover:scale-[1.02] transition-all duration-200 cursor-pointer;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+           border-2 border-blue-100 font-bold text-lg;
+    color: #7C8CFF;
+    box-shadow: 0 4px 20px rgba(124, 140, 255, 0.15);
   }
 
   .achievement-badge {
-    @apply flex flex-col items-center justify-center gap-2 p-4
-           rounded-2xl text-white;
-    background: linear-gradient(135deg, #FFD93D, #FF6B2B);
-    box-shadow: 0 0 20px rgba(255, 107, 43, 0.4);
+    @apply flex flex-col items-center justify-center gap-2 p-4 rounded-2xl text-white;
+    background: linear-gradient(135deg, #7C8CFF, #B68DFF);
+  }
+
+  .star-badge {
+    @apply inline-flex items-center justify-center w-10 h-10 rounded-full
+           text-white font-black text-lg;
+    background: linear-gradient(135deg, #FFB84D, #FF6B2B);
+  }
+
+  .worksheet-card {
+    @apply bg-white rounded-2xl border border-blue-100 p-4
+           hover:scale-[1.02] transition-all duration-200 cursor-pointer;
+    box-shadow: 0 2px 12px rgba(124, 140, 255, 0.1);
+  }
+
+  .sticker {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
   }
 }
 
-/* Custom scrollbar */
+/* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #FFF0E0; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: linear-gradient(#FF6B2B, #FF4B8B); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #e85c1e; }
+::-webkit-scrollbar-track { background: #EEF2FF; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#7C8CFF, #B68DFF); border-radius: 10px; }
 
-/* Letter tracing */
+/* ─── ANIMATIONS ─── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes floatCloud {
+  0%   { transform: translateX(0px) translateY(0px); }
+  25%  { transform: translateX(8px) translateY(-4px); }
+  50%  { transform: translateX(0px) translateY(-8px); }
+  75%  { transform: translateX(-8px) translateY(-4px); }
+  100% { transform: translateX(0px) translateY(0px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50%       { opacity: 0.7; transform: scale(1.2) rotate(180deg); }
+}
+
+@keyframes bounceGentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.8); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 @keyframes trace {
   from { stroke-dashoffset: 1000; }
   to   { stroke-dashoffset: 0; }
 }
-.trace-animation {
-  stroke-dasharray: 1000;
-  animation: trace 2s ease-in-out forwards;
-}
 
-/* Balloon */
 @keyframes balloonFloat {
   0%   { transform: translateY(100vh) rotate(-5deg); }
   100% { transform: translateY(-100px) rotate(5deg); }
 }
-.balloon-float { animation: balloonFloat linear forwards; }
 
-/* Responsive */
+.animate-float          { animation: float 4s ease-in-out infinite; }
+.animate-float-cloud    { animation: floatCloud 6s ease-in-out infinite; }
+.animate-fade-in-up     { animation: fadeInUp 0.5s ease both; }
+.animate-sparkle        { animation: sparkle 2s ease-in-out infinite; }
+.animate-bounce-gentle  { animation: bounceGentle 2s ease-in-out infinite; }
+.animate-pop            { animation: pop 0.3s ease-out; }
+.trace-animation        { stroke-dasharray: 1000; animation: trace 2s ease-in-out forwards; }
+.balloon-float          { animation: balloonFloat linear forwards; }
+
+/* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  .nav-card     { @apply p-4; }
-  .letter-display { @apply text-[80px]; }
-  .game-button  { @apply py-5 text-xl; }
+  .nav-card    { @apply p-4; }
+  .letter-display { font-size: 80px; }
+  .game-button { @apply py-5 text-xl; }
 }
 
-/* Print */
+/* ─── PRINT ─── */
 @media print {
-  .no-print    { display: none !important; }
-  .print-only  { display: block !important; }
-  body         { background: white; }
+  .no-print   { display: none !important; }
+  .print-only { display: block !important; }
+  body        { background: white; }
 }
