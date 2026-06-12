@@ -1,0 +1,306 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  password      String?
+  role          UserRole  @default(PARENT)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts    Account[]
+  sessions    Session[]
+  children    Child[]
+  worksheetDownloads WorksheetDownload[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Child {
+  id        String   @id @default(cuid())
+  name      String
+  avatar    String?
+  age       Int?
+  parentId  String
+  pin       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent   User     @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  progress Progress[]
+  gameScores GameScore[]
+  achievements ChildAchievement[]
+  storyProgress StoryProgress[]
+  worksheetProgress WorksheetProgress[]
+  streaks   Streak[]
+
+  @@map("children")
+}
+
+model Lesson {
+  id          String      @id @default(cuid())
+  type        LessonType
+  slug        String      @unique
+  title       String
+  description String?
+  order       Int
+  content     Json
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  progress Progress[]
+
+  @@map("lessons")
+}
+
+model Progress {
+  id         String         @id @default(cuid())
+  childId    String
+  lessonId   String
+  status     ProgressStatus @default(NOT_STARTED)
+  score      Int?
+  attempts   Int            @default(0)
+  timeSpent  Int            @default(0)
+  completedAt DateTime?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  child  Child  @relation(fields: [childId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([childId, lessonId])
+  @@map("progress")
+}
+
+model Story {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  coverImage  String?
+  audioUrl    String?
+  pages       Json
+  wordList    String[]
+  difficulty  Int      @default(1)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  storyProgress StoryProgress[]
+
+  @@map("stories")
+}
+
+model StoryProgress {
+  id          String   @id @default(cuid())
+  childId     String
+  storyId     String
+  currentPage Int      @default(0)
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  child Child @relation(fields: [childId], references: [id], onDelete: Cascade)
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@unique([childId, storyId])
+  @@map("story_progress")
+}
+
+model Worksheet {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  description String?
+  category    WorksheetCategory
+  pdfUrl      String?
+  thumbnailUrl String?
+  content     Json
+  tags        String[]
+  difficulty  Int             @default(1)
+  isPublished Boolean         @default(true)
+  downloadCount Int           @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  worksheetProgress WorksheetProgress[]
+  downloads WorksheetDownload[]
+
+  @@map("worksheets")
+}
+
+model WorksheetProgress {
+  id          String   @id @default(cuid())
+  childId     String
+  worksheetId String
+  completed   Boolean  @default(false)
+  score       Int?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  child     Child     @relation(fields: [childId], references: [id], onDelete: Cascade)
+  worksheet Worksheet @relation(fields: [worksheetId], references: [id], onDelete: Cascade)
+
+  @@unique([childId, worksheetId])
+  @@map("worksheet_progress")
+}
+
+model WorksheetDownload {
+  id          String   @id @default(cuid())
+  worksheetId String
+  userId      String
+  createdAt   DateTime @default(now())
+
+  worksheet Worksheet @relation(fields: [worksheetId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("worksheet_downloads")
+}
+
+model GameScore {
+  id        String   @id @default(cuid())
+  childId   String
+  gameType  GameType
+  score     Int
+  level     Int      @default(1)
+  duration  Int?
+  createdAt DateTime @default(now())
+
+  child Child @relation(fields: [childId], references: [id], onDelete: Cascade)
+
+  @@map("game_scores")
+}
+
+model Achievement {
+  id          String          @id @default(cuid())
+  name        String
+  description String
+  icon        String
+  type        AchievementType
+  criteria    Json
+  points      Int             @default(10)
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+
+  childAchievements ChildAchievement[]
+
+  @@map("achievements")
+}
+
+model ChildAchievement {
+  id            String   @id @default(cuid())
+  childId       String
+  achievementId String
+  earnedAt      DateTime @default(now())
+
+  child       Child       @relation(fields: [childId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([childId, achievementId])
+  @@map("child_achievements")
+}
+
+model Streak {
+  id          String   @id @default(cuid())
+  childId     String   @unique
+  currentStreak Int    @default(0)
+  longestStreak Int    @default(0)
+  lastActivity DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  child Child @relation(fields: [childId], references: [id], onDelete: Cascade)
+
+  @@map("streaks")
+}
+
+enum UserRole {
+  PARENT
+  ADMIN
+}
+
+enum LessonType {
+  LETTER
+  SOUND
+  BLENDING
+  STORY
+  GAME
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  MASTERED
+}
+
+enum WorksheetCategory {
+  ALPHABET
+  PHONICS
+  CVC_WORDS
+  EARLY_READING
+  CREATIVE
+}
+
+enum GameType {
+  SOUND_HUNT
+  BUILD_WORD
+  MATCH_RHYME
+  POP_LETTER
+  TREASURE_TRAIL
+}
+
+enum AchievementType {
+  LETTER
+  SOUND
+  BLENDING
+  STORY
+  WORKSHEET
+  STREAK
+  GAME
+  SPECIAL
+}

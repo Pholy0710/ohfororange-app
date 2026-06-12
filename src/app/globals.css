@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 35 100% 98%;
+    --foreground: 20 14% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14% 20%;
+    --primary: 22 100% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 100% 88%;
+    --secondary-foreground: 20 14% 20%;
+    --muted: 30 40% 95%;
+    --muted-foreground: 20 10% 50%;
+    --accent: 40 100% 60%;
+    --accent-foreground: 20 14% 20%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 22 100% 58%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-[#FFF8F4] text-foreground font-body;
+    font-family: "Nunito", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Nunito", system-ui, sans-serif;
+    font-weight: 800;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#FF6B2B] to-[#FFA07A] text-white font-bold py-3 px-6 rounded-2xl
+           shadow-card hover:shadow-card-hover transition-all duration-200 hover:scale-105
+           active:scale-95 cursor-pointer select-none;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-[#FF6B2B] font-bold py-3 px-6 rounded-2xl border-2 border-[#FF6B2B]
+           hover:bg-[#FFF3EE] transition-all duration-200 hover:scale-105 active:scale-95
+           cursor-pointer select-none;
+  }
+
+  .card-orange {
+    @apply bg-white rounded-3xl shadow-card border border-orange-100 p-6
+           hover:shadow-card-hover hover:scale-[1.02] transition-all duration-200;
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-[#FFF8F4] to-[#FFEEDD] rounded-3xl shadow-card
+           border border-orange-100 p-6;
+  }
+
+  .letter-display {
+    @apply text-[120px] font-black text-[#FF6B2B] leading-none select-none;
+    font-family: "Nunito", system-ui, sans-serif;
+    text-shadow: 4px 4px 0px rgba(255, 107, 43, 0.2);
+  }
+
+  .sparkle {
+    @apply inline-block animate-sparkle;
+  }
+
+  .section-title {
+    @apply text-3xl font-black text-[#FF6B2B] mb-2;
+  }
+
+  .nav-card {
+    @apply flex flex-col items-center justify-center gap-3 p-6 rounded-3xl
+           bg-white shadow-card hover:shadow-card-hover hover:scale-105
+           transition-all duration-200 cursor-pointer select-none
+           border-2 border-transparent hover:border-[#FF6B2B]/20;
+  }
+
+  .progress-bar {
+    @apply h-4 rounded-full bg-orange-100 overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full bg-gradient-to-r from-[#FF6B2B] to-[#FFD93D]
+           transition-all duration-500 ease-out;
+  }
+
+  .sticker {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
+  }
+
+  .star-badge {
+    @apply inline-flex items-center justify-center w-10 h-10 rounded-full
+           bg-gradient-to-br from-[#FFD93D] to-[#FF6B2B] text-white font-black text-lg
+           shadow-glow;
+  }
+
+  .game-button {
+    @apply w-full py-4 px-6 rounded-2xl font-bold text-lg
+           bg-gradient-to-r from-[#FF6B2B] to-[#FFA07A] text-white
+           shadow-card hover:shadow-card-hover active:scale-95
+           transition-all duration-150 cursor-pointer select-none;
+  }
+
+  .audio-button {
+    @apply flex items-center justify-center w-14 h-14 rounded-full
+           bg-gradient-to-br from-[#6BC5F8] to-[#6BCFB5] text-white
+           shadow-soft hover:scale-110 active:scale-90
+           transition-all duration-150 cursor-pointer;
+  }
+
+  .word-card {
+    @apply bg-white rounded-2xl shadow-soft border border-orange-100
+           p-4 text-center hover:shadow-card hover:scale-105
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .mascot-bubble {
+    @apply relative bg-white rounded-2xl shadow-card p-4
+           border-2 border-orange-200 text-[#FF6B2B] font-bold text-lg;
+  }
+
+  .worksheet-card {
+    @apply bg-white rounded-2xl shadow-soft border border-orange-100 p-4
+           hover:shadow-card hover:scale-[1.02] transition-all duration-200
+           cursor-pointer;
+  }
+
+  .achievement-badge {
+    @apply flex flex-col items-center justify-center gap-2 p-4
+           bg-gradient-to-br from-[#FFD93D] to-[#FF6B2B] rounded-2xl
+           text-white shadow-glow;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF0E0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF6B2B;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e85c1e;
+}
+
+/* Letter tracing animation */
+@keyframes trace {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.trace-animation {
+  stroke-dasharray: 1000;
+  animation: trace 2s ease-in-out forwards;
+}
+
+/* Balloon float animation */
+@keyframes balloonFloat {
+  0% { transform: translateY(100vh) rotate(-5deg); }
+  100% { transform: translateY(-100px) rotate(5deg); }
+}
+
+.balloon-float {
+  animation: balloonFloat linear forwards;
+}
+
+/* Confetti animation */
+@keyframes confetti-fall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Responsive touch targets */
+@media (max-width: 768px) {
+  .nav-card {
+    @apply p-4;
+  }
+
+  .letter-display {
+    @apply text-[80px];
+  }
+
+  .game-button {
+    @apply py-5 text-xl;
+  }
+}
+
+/* Print styles for worksheets */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white;
+  }
+}
