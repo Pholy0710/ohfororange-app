@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ProgressBar } from "@/components/shared/ProgressBar";
 
 const NAV_CARDS = [
@@ -29,64 +30,82 @@ export default function HomePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-4">
 
-      {/* ══════════ HERO BANNER ══════════ */}
+      {/* ══════════ HERO BANNER — real cover photo ══════════ */}
       <motion.div
         className="relative overflow-hidden rounded-[2rem] mb-5"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{
-          background: "linear-gradient(135deg, #FF6B2B 0%, #FF4B8B 55%, #8B5CF6 100%)",
-          boxShadow: "0 8px 40px rgba(255, 107, 43, 0.45)",
-        }}
+        style={{ boxShadow: "0 10px 48px rgba(255, 107, 43, 0.45)" }}
       >
-        {/* Decorative blobs */}
-        <div className="absolute top-0 right-0 w-52 h-52 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/3 pointer-events-none" />
-        <div className="absolute top-1/2 right-1/3 w-20 h-20 bg-white/10 rounded-full -translate-y-1/2 pointer-events-none" />
-        {/* Top shine */}
-        <div className="absolute inset-0 pointer-events-none rounded-[2rem]"
-             style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.2), transparent 55%)" }} />
+        {/* Cover photo as background */}
+        <div className="relative h-56 sm:h-64 w-full">
+          <Image
+            src="/cover.png"
+            alt="OhforOrange Cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+            priority
+          />
+          {/* Gradient overlay so text is readable */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 55%, transparent 100%)" }}
+          />
 
-        {/* Floating sparkles */}
-        {["✨", "⭐", "💫", "🌟"].map((emoji, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-xl pointer-events-none select-none opacity-70"
-            style={{ left: `${14 + i * 19}%`, top: `${8 + (i % 2) * 18}%` }}
-            animate={{ y: [0, -9, 0], rotate: [0, 15, 0], scale: [1, 1.25, 1] }}
-            transition={{ duration: 2.4 + i * 0.4, repeat: Infinity, delay: i * 0.55 }}
-          >
-            {emoji}
-          </motion.div>
-        ))}
+          {/* Floating sparkles */}
+          {["✨", "⭐", "💫"].map((emoji, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-2xl pointer-events-none select-none"
+              style={{ right: `${8 + i * 12}%`, top: `${10 + i * 10}%` }}
+              animate={{ y: [0, -10, 0], rotate: [0, 15, 0], scale: [1, 1.3, 1] }}
+              transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, delay: i * 0.6 }}
+            >
+              {emoji}
+            </motion.div>
+          ))}
 
-        {/* Content */}
-        <div className="relative z-10 p-6 flex items-center gap-5">
-          <motion.div
-            className="text-7xl select-none flex-shrink-0"
-            animate={{ y: [0, -10, 0], rotate: [-3, 3, -3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            🍊
-          </motion.div>
-          <div className="flex-1 min-w-0">
-            <h1 className="display-font text-4xl md:text-5xl text-white leading-none mb-1 drop-shadow-lg">
-              OhforOrange
-            </h1>
-            <p className="text-white/90 font-black text-lg">Read &amp; Play! 📚</p>
-            <p className="text-white/75 font-semibold text-sm mt-0.5">
-              Learning made fun for kids age 5! ✨
-            </p>
+          {/* Bottom content on cover */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+            <div>
+              <p className="text-white/90 font-black text-base drop-shadow">
+                Learning made fun for kids age 5! 🎉
+              </p>
+            </div>
             <Link
               href="/letters"
-              className="inline-flex items-center gap-2 mt-3 bg-white text-[#FF6B2B] font-black
-                         px-5 py-2.5 rounded-2xl text-sm shadow-lg hover:shadow-xl
-                         hover:scale-105 active:scale-95 transition-all duration-200"
+              className="flex-shrink-0 bg-white text-[#FF6B2B] font-black px-5 py-2.5 rounded-2xl text-sm
+                         shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200"
             >
-              🎮 Start Learning!
+              🎮 Start!
             </Link>
           </div>
+        </div>
+      </motion.div>
+
+      {/* ══════════ LOGO + TAGLINE ══════════ */}
+      <motion.div
+        className="flex items-center gap-4 bg-white rounded-3xl p-4 mb-4 border border-orange-100"
+        style={{ boxShadow: "0 4px 20px rgba(255, 107, 43, 0.12)" }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.15 }}
+      >
+        <div className="relative w-20 h-20 flex-shrink-0">
+          <Image
+            src="/logo.png"
+            alt="Oh for Orange Logo"
+            fill
+            className="object-contain"
+            sizes="80px"
+          />
+        </div>
+        <div>
+          <h2 className="display-font text-2xl gradient-text leading-tight">Oh for Orange</h2>
+          <p className="font-bold text-gray-500 text-sm">Read &amp; Play — Learn to Read! 📚</p>
+          <p className="text-xs text-gray-400 font-bold mt-0.5">Stay Bright. Spread Joy. ✨</p>
         </div>
       </motion.div>
 
@@ -94,7 +113,7 @@ export default function HomePage() {
       <motion.div
         className="bg-white rounded-3xl p-4 mb-4 border border-orange-100"
         style={{ boxShadow: "0 4px 20px rgba(255, 107, 43, 0.12)" }}
-        initial={{ opacity: 0, x: -20 }}
+        initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
       >
@@ -132,7 +151,7 @@ export default function HomePage() {
       <motion.div
         className="relative overflow-hidden rounded-3xl p-5 mb-4 text-white"
         style={{ background: "linear-gradient(135deg, #F59E0B 0%, #FF6B2B 100%)", boxShadow: "0 6px 28px rgba(245, 158, 11, 0.4)" }}
-        initial={{ opacity: 0, x: 20 }}
+        initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
       >
@@ -162,8 +181,8 @@ export default function HomePage() {
       <motion.div
         className="relative overflow-hidden rounded-3xl p-5 mb-5 text-white"
         style={{ background: "linear-gradient(135deg, #10B981 0%, #0EA5E9 100%)", boxShadow: "0 6px 28px rgba(16, 185, 129, 0.35)" }}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.35 }}
       >
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
@@ -233,13 +252,40 @@ export default function HomePage() {
         ))}
       </motion.div>
 
+      {/* ══════════ BRAND SECTION — instagram post ══════════ */}
+      <motion.div
+        className="relative overflow-hidden rounded-[2rem] mb-5"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.65 }}
+        style={{ boxShadow: "0 8px 32px rgba(255, 107, 43, 0.25)" }}
+      >
+        <div className="relative h-64 w-full">
+          <Image
+            src="/brand-post.png"
+            alt="Oh for Orange — Stay Bright, Spread Joy"
+            fill
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+          />
+          <div
+            className="absolute inset-0 rounded-[2rem]"
+            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%)" }}
+          />
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <p className="text-white font-black text-lg drop-shadow">Stay Bright. Spread Joy. 🍊</p>
+            <p className="text-white/80 text-sm font-bold">The fun way to learn to read!</p>
+          </div>
+        </div>
+      </motion.div>
+
       {/* ══════════ STREAK BANNER ══════════ */}
       <motion.div
         className="bg-white rounded-3xl p-4 border border-orange-100 flex items-center gap-3"
         style={{ boxShadow: "0 4px 20px rgba(255, 107, 43, 0.12)" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.7 }}
+        transition={{ delay: 0.75 }}
       >
         <motion.div
           className="text-4xl select-none"

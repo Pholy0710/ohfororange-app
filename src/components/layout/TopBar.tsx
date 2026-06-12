@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 interface TopBarProps {
@@ -23,7 +24,7 @@ export function TopBar({ title, backHref, showStars = true, stars = 0, rightElem
         style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)" }}
       />
 
-      <div className="relative flex items-center justify-between px-4 py-3 max-w-4xl mx-auto">
+      <div className="relative flex items-center justify-between px-4 py-2 max-w-4xl mx-auto">
         {/* Left */}
         <div className="flex items-center gap-3">
           {backHref ? (
@@ -36,13 +37,19 @@ export function TopBar({ title, backHref, showStars = true, stars = 0, rightElem
             </Link>
           ) : (
             <Link href="/home" className="flex items-center gap-2">
-              <motion.span
-                className="text-2xl select-none"
-                animate={{ rotate: [-5, 5, -5] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              <motion.div
+                className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white/60 shadow-lg flex-shrink-0"
+                animate={{ rotate: [-3, 3, -3] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                🍊
-              </motion.span>
+                <Image
+                  src="/profile.png"
+                  alt="OhforOrange"
+                  fill
+                  className="object-cover"
+                  sizes="44px"
+                />
+              </motion.div>
               <span className="display-font text-white text-xl hidden sm:block drop-shadow-sm tracking-wide">
                 OhforOrange
               </span>
